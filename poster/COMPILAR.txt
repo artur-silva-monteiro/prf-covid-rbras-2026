@@ -1,0 +1,1 @@
+No Overleaf, importe a pasta poster como projeto e selecione XeLaTeX. Documento principal: poster.tex. As fontes Montserrat estão incluídas. O título foi abreviado no cabeçalho; o título integral do aceite está no comentário inicial. O QR aponta ao endereço previsto do repositório; confirme a publicação antes de imprimir.

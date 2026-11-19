@@ -1,0 +1,102 @@
+\documentclass{rbras-poster}
+\setsansfont{Montserrat-Regular.ttf}[Path=fonts/,BoldFont=Montserrat-Bold.ttf]
+% Título completo no aceite (trabalho 153):
+% Acidentes em rodovias federais brasileiras no contexto da pandemia de COVID-19:
+% uma análise exploratória dos dados da PRF.
+% Forma abreviada no cabeçalho para preservar legibilidade e corpos do modelo.
+\titulo{Acidentes em rodovias\\federais no contexto\\da COVID-19}
+\autores{\textbf{Artur Silva Monteiro}\\Maurício Alexandre de Lacerda Ribeiro\\Gabriel Naves Queiroz Buffon}
+\afiliacoes{Universidade Federal do Espírito Santo}
+\email{silvaartur2001@gmail.com}
+\mensagem{Nas dez BRs selecionadas, houve aumento de 13,5\% nos acidentes entre 2021 e 2025.}
+\qrlink{https://github.com/artur-silva-monteiro/prf-covid-rbras-2026}
+\qrlegenda{Relatório · código · fontes}
+\logoinstituicao{logo-ufes.png}
+\conclusoes
+{Nas dez BRs, os acidentes passaram de 39.016 para 44.293 em 2021–2025.}
+{Em 2021–2024, os óbitos por COVID-19 caíram 98,6\%; os da PRF aumentaram 14,1\%.}
+{O estudo descreve mudanças nos registros; a interpretação exige considerar a exposição ao tráfego.}
+\referencias{[1] Polícia Rodoviária Federal. Dados Abertos: acidentes por ocorrência, 2021–2025.\par
+[2] Ministério da Saúde. Painel Coronavírus Brasil. Base atualizada até 05/09/2025; análise de 2021 a 2024.}
+\agradecimentos{Agradecemos ao professor Fábio pelas orientações na disciplina Métodos Computacionais para Ciência de Dados I, na qual foi desenvolvida a análise que deu origem a este pôster.}
+\rodape{70ª RBras · Trabalho 153 · Versão para revisão}
+
+\begin{document}
+\begin{colunaesquerda}
+\begin{secao}{1}{Pergunta}
+Como variaram os acidentes nas BRs selecionadas?
+\par\vspace{12bp}
+Como variaram os óbitos da PRF e por COVID-19?
+\end{secao}
+\begin{secao}{2}{Dados}
+\textbf{PRF.} Acidentes por ocorrência, em 2021–2025. As dez BRs foram selecionadas pelo total acumulado de registros nesse intervalo.
+\par\vspace{24bp}
+\textbf{COVID-19.} Óbitos no Brasil, 2021–2024. Fonte: Ministério da Saúde.
+\par\vspace{24bp}
+A base da COVID-19 termina em 05/09/2025. A comparação dos óbitos utiliza apenas anos completos em ambas as fontes.
+\end{secao}
+\begin{secao}{3}{Método}
+Importação, padronização e agregação anual em R, com readr, dplyr e ggplot2.
+\par\vspace{24bp}
+Contagem dos acidentes nas dez BRs e soma dos óbitos em todas as rodovias federais da base.
+\par\vspace{24bp}
+Variação percentual calculada entre o primeiro e o último ano de cada recorte.
+\par\vspace{24bp}
+Os dois painéis de óbitos usam escalas próprias. As contagens de acidentes também dependem da exposição ao tráfego.
+\end{secao}
+\end{colunaesquerda}
+\begin{colunadireita}
+\begin{secao}{4}{Resultados}
+{\tamFigTitulo\bfseries Os acidentes cresceram após 2022\par}
+\vspace{12bp}
+{\tamRotulo Dez BRs com mais ocorrências no acumulado de 2021–2025\par}
+\vspace{12bp}
+\begin{tikzpicture}
+\begin{axis}[rbras,ymajorgrids,axis x line*=bottom,scaled ticks=false,width=1070bp,height=425bp,xmin=2020.7,xmax=2025.35,
+ymin=37500,ymax=46000,xtick={2021,2022,2023,2024,2025},
+xticklabel style={/pgf/number format/1000 sep={}},
+ytick={38000,40000,42000,44000,46000},
+yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=0},
+ylabel={Acidentes},enlarge x limits=false]
+\addplot[rbAzul,line width=5bp,mark=*,mark size=6bp]
+coordinates {(2021,39016)(2022,38658)(2023,41235)(2024,44289)(2025,44293)};
+\foreach \x/\y/\lab in {2021/39016/39.016,2022/38658/38.658,2023/41235/41.235,2024/44289/44.289,2025/44293/44.293}
+{\edef\temp{\noexpand\node[above=12bp,font=\noexpand\tamEixo,text=rbAzul] at (axis cs:\x,\y){\lab};}\temp}
+\end{axis}
+\end{tikzpicture}
+\par\vspace{10bp}
+{\tamLegenda\textbf{Figura 1.} Total anual de acidentes nas dez BRs selecionadas. Fonte: PRF.\par}
+\vspace{55bp}
+{\tamFigTitulo\bfseries Os óbitos seguiram trajetórias distintas\par}
+\vspace{12bp}
+{\tamRotulo Totais anuais, 2021–2024; escalas verticais próprias\par}
+\vspace{24bp}
+\begin{tikzpicture}
+\begin{axis}[rbras,ymajorgrids,axis x line*=bottom,scaled ticks=false,width=470bp,height=425bp,
+title={COVID-19 no Brasil},title style={font=\tamRotulo\bfseries},
+xmin=2020.7,xmax=2024.4,ymin=0,ymax=500000,
+xtick={2021,2022,2023,2024},xticklabel style={/pgf/number format/1000 sep={}},
+ytick={0,200000,400000},scaled y ticks=false,
+yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=0}]
+\addplot[rbCinza,line width=5bp,mark=*,mark size=6bp]
+coordinates {(2021,424107)(2022,74797)(2023,14785)(2024,5959)};
+\foreach \x/\y/\lab in {2021/424107/424.107,2022/74797/74.797,2023/14785/14.785,2024/5959/5.959}
+{\edef\temp{\noexpand\node[above=12bp,font=\noexpand\tamEixo,text=rbCinza] at (axis cs:\x,\y){\lab};}\temp}
+\end{axis}
+\begin{axis}[rbras,ymajorgrids,axis x line*=bottom,scaled ticks=false,at={(680bp,0)},anchor=south west,width=470bp,height=425bp,
+title={Rodovias federais},title style={font=\tamRotulo\bfseries},
+xmin=2020.7,xmax=2024.4,ymin=0,ymax=7300,
+xtick={2021,2022,2023,2024},xticklabel style={/pgf/number format/1000 sep={}},
+ytick={0,2000,4000,6000},scaled y ticks=false,
+yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=0}]
+\addplot[rbAzul,line width=5bp,mark=*,mark size=6bp]
+coordinates {(2021,5397)(2022,5441)(2023,5627)(2024,6160)};
+\foreach \x/\y/\lab in {2021/5397/5.397,2022/5441/5.441,2023/5627/5.627,2024/6160/6.160}
+{\edef\temp{\noexpand\node[above=12bp,font=\noexpand\tamEixo,text=rbAzul] at (axis cs:\x,\y){\lab};}\temp}
+\end{axis}
+\end{tikzpicture}
+\par\vspace{10bp}
+{\tamLegenda\textbf{Figura 2.} Óbitos nacionais por COVID-19 e óbitos registrados pela PRF. Fontes: Ministério da Saúde e PRF.\par}
+\end{secao}
+\end{colunadireita}
+\end{document}
